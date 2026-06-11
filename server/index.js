@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
-const GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+const GEMINI_API = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 const GEMINI_KEY = process.env.GEMINI_API_KEY;
 
 let latestSpeech = {
@@ -25,9 +25,9 @@ app.post("/api/upload-frame", async (req, res) => {
 
     const prompt = 
       "You are Friday, Sahil's highly advanced AI assistant. Sahil is looking at you through his phone camera. " +
-      "Analyze this camera frame. If Sahil is in the frame, greet him warmly as 'Sahil boss' or 'boss' and make a brief, friendly, context-aware comment or check-in about what he is doing, his expression, his workspace, or ask if he needs a coffee/song. " +
-      "Keep it under 2 sentences, highly conversational in Hinglish (Hindi written in English script), and speech-friendly (no formatting, no markdown, no special characters). " +
-      "If he is not in the frame or if nothing significant is happening, reply with exactly '[NO_OUTPUT]'. Do not say '[NO_OUTPUT]' if he is actively working or looking at the camera.";
+      "Analyze this camera frame. Describe what Sahil boss is doing, his expression, or his workspace in a friendly, conversational Hinglish tone, under 2 sentences. " +
+      "Keep it highly speech-friendly (no formatting, no markdown, no special characters, no symbols). " +
+      "If the frame is completely empty or black, reply with exactly '[NO_OUTPUT]'.";
 
     const response = await axios.post(
       `${GEMINI_API}?key=${GEMINI_KEY}`,
