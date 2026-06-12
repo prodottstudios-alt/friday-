@@ -53,8 +53,11 @@ export default function App() {
       const data = await resp.json();
       if (data.reply && data.reply !== "[NO_OUTPUT]" && !data.reply.includes("[NO_OUTPUT]")) {
         setAnswer(data.reply);
+        setActive(false); // Turn off after greeting once
+        setStatus("Greeted. Mac Mic Active!");
+      } else {
+        setStatus("Watching...");
       }
-      setStatus("Watching...");
     } catch (e) {
       console.error(e);
       setStatus("Error sending frame");
